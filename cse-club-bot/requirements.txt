@@ -1,4 +1,5 @@
-pynacl      # Needed for Discord Bot to perform authentication
-requests    # Needed to integrate with other URLs and perform actions
-openai      # Allows OpenAI API interactions
-discord.py  # Allow Discord specific actions
+pynacl                # Needed for Discord Bot to perform authentication
+requests              # Needed to integrate with other URLs and perform actions
+openai                # Allows OpenAI API interactions
+discord-interactions  # Allow verifying the Discord certificate in request
+discord.py            # Allow Discord specific actions
