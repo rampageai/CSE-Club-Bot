@@ -1,12 +1,13 @@
 import json
 import os
 import base64
-from nacl.signing import VerifyKey
-from nacl.exceptions import BadSignatureError
 import requests
 
 import discord
 from discord import app_commands
+
+# Used for basic Discord Interactions
+from discord_interactions import verify_key, InteractionType, InteractionResponseType
 
 from openai import OpenAI
 
@@ -53,25 +54,17 @@ def lambda_handler(event, context):
 
     # Skip security verification if "isTest" is set
     if data.get("isTest", None) == None:
-        try:
-            #verify_key = bytes.fromhex(PUBLIC_KEY)
-            #print(verify_key)
-            print(f"Timestamp String {timestamp.encode()}")
-            print(f"Body String {body.encode()}")
-            msg = timestamp + body
 
-            print(f"Msg: {msg}")
-            #print(msg)
-            #verify_key = ed25519.Ed25519PublicKey.from_public_bytes(bytes.fromhex(PUBLIC_KEY))
-            #verify_key.verify(bytes.fromhex(signature), f"{timestamp}{body}".encode())
-            verify_key = VerifyKey(bytes.fromhex(PUBLIC_KEY))
-            verify_key.verify(msg.encode(), bytes.fromhex(signature))
-
-        except Exception as e:
-            print(f"An error occurred: {e}")
-            return {"statusCode": 401, "body": "Invalid Request"}
-
-    # 2. Parse Interaction Data       
+        # Security Check: Verify the request origin
+        if not signature or not timestamp or not verify_key(data.encode('utf-8'), signature, timestamp, PUBLIC_KEY):
+            return {
+                'statusCode': 401,
+                'body': json.dumps('Invalid request signature')
+            }
+            
+    # Parse the verified payload
+    interaction = json.loads(data)
+    interaction_type = interaction.get('type')
     result = None
 
     # 3. Handle PING (Initial Discord Verification)
