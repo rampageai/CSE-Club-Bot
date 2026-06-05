@@ -1,2 +1,2 @@
-# CSE-Club-Bot
+# CSE Club Bot
 Clark College Computer Club Bot
