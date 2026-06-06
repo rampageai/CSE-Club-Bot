@@ -9,6 +9,7 @@ on:
 
 jobs:
   deploy:
+    environment: Production
     runs-on: ubuntu-latest
     steps:
       # 1. Download repository files onto the runner
