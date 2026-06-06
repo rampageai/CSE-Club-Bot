@@ -19,7 +19,8 @@ job_listing_websites = [
     "coporatetools.com",
     "https://info.encs.vancouver.wsu.edu/student-success/career-resources/",
     "https://www.nlight.net/careers/",
-    "https://www.fourthplainforward.org/get-a-job"
+    "https://www.fourthplainforward.org/get-a-job",
+    "https://collegegrad.com/"
 ]
 
 def lambda_handler(event, context):
