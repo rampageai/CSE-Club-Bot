@@ -18,7 +18,8 @@ job_listing_websites = [
     "ziprecruiter.com",
     "coporatetools.com",
     "https://info.encs.vancouver.wsu.edu/student-success/career-resources/",
-    "https://www.nlight.net/careers/"
+    "https://www.nlight.net/careers/",
+    "https://www.fourthplainforward.org/get-a-job"
 ]
 
 def lambda_handler(event, context):
@@ -196,7 +197,7 @@ def lambda_handler(event, context):
             
             response = client.responses.create(
                 model="gpt-5.5",
-                instructions=f"You are a helpful job search assistant. Using the linked resume at {document_url} and narrowing the search based on the provided prompt use the provided URLs to find the best 5 matches and offer any advice on improving resume to meet these matches in under 1950 characters including links to what you found: {', '.join(job_listing_websites)}",
+                instructions=f"You are a helpful job search assistant. Using the linked resume at {document_url} and narrowing the search based on the provided prompt use the provided URLs to find the best 5 matches that are still accepting resumes and not expired and include any email or phone number contact associated with the job listing in under 1950 characters including links to what you found: {', '.join(job_listing_websites)}",
                 input=prompt,
                 tools=[
                     {
